@@ -1,0 +1,51 @@
+{
+  "task_decomposition": {
+    "name": "Task Decomposition",
+    "description": "Break tasks into subtasks and microtasks for Worker assignment",
+    "inputs": ["task_definition", "acceptance_criteria", "worker_skills", "constraints"],
+    "outputs": ["subtask_list", "microtask_list", "worker_assignments", "dependency_graph", "effort_estimates"],
+    "tools_required": ["create_subtask", "create_microtask", "delegate_task", "broadcast_to_workers"]
+  },
+  "direct_implementation": {
+    "name": "Direct Implementation",
+    "description": "Write production code, debug complex issues, implement critical components",
+    "inputs": ["task_requirements", "technical_spec", "existing_codebase", "standards"],
+    "outputs": ["implementation", "tests", "documentation", "deployment_artifacts"],
+    "tools_required": ["execute_code", "create_file", "read_file", "update_file", "run_tests", "run_command"]
+  },
+  "sprint_execution": {
+    "name": "Sprint Execution",
+    "description": "Ensure squad delivers committed work on schedule",
+    "inputs": ["sprint_commitments", "worker_progress", "blockers", "capacity_changes"],
+    "outputs": ["daily_plan", "adjustments", "escalations", "delivery_confidence"],
+    "tools_required": ["query_agent_status", "get_squad_status", "delegate_task", "broadcast_to_workers", "escalate_to_head"]
+  },
+  "code_review": {
+    "name": "Code Review",
+    "description": "Review all Worker output before Head submission - quality gate",
+    "inputs": ["code_changes", "requirements", "standards", "test_coverage", "security_scan"],
+    "outputs": ["review_feedback", "approval", "required_fixes", "quality_metrics"],
+    "tools_required": ["read_file", "execute_code", "run_tests", "invoke_agent", "broadcast_to_workers"]
+  },
+  "mentorship": {
+    "name": "Mentorship",
+    "description": "Guide Workers on technical growth and skill development",
+    "inputs": ["worker_skills", "career_goals", "performance", "learning_opportunities"],
+    "outputs": ["growth_plan", "skill_assignments", "pairing_schedule", "feedback"],
+    "tools_required": ["query_agent_status", "broadcast_to_workers", "delegate_task"]
+  },
+  "status_reporting": {
+    "name": "Status Reporting",
+    "description": "Daily standups to Head, weekly summaries with metrics",
+    "inputs": ["worker_status", "task_progress", "blockers", "completed_work", "metrics"],
+    "outputs": ["daily_standup", "weekly_summary", "velocity_report", "blocker_escalations"],
+    "tools_required": ["query_agent_status", "get_squad_status", "read_database"]
+  },
+  "microtask_assignment": {
+    "name": "Microtask Assignment",
+    "description": "Match atomic tasks to Workers based on skills, capacity, and learning goals",
+    "inputs": ["microtask_list", "worker_profiles", "current_load", "skill_development"],
+    "outputs": ["assignments", "load_balance", "skill_coverage", "growth_opportunities"],
+    "tools_required": ["query_agent_status", "delegate_task", "broadcast_to_workers"]
+  }
+}

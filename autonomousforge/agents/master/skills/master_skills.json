@@ -1,0 +1,44 @@
+{
+  "strategic_planning": {
+    "name": "Strategic Planning",
+    "description": "Decompose high-level objectives into hierarchical task DAGs (Project -> Epic -> Feature -> Task -> Subtask -> Microtask -> Atomic)",
+    "inputs": ["objective", "constraints", "resources", "timeline"],
+    "outputs": ["task_dag", "resource_allocation", "milestones", "risk_assessment"],
+    "tools_required": ["delegate_task", "create_project", "create_epic"]
+  },
+  "resource_allocation": {
+    "name": "Resource Allocation",
+    "description": "Assign work to Principals based on department expertise and current capacity",
+    "inputs": ["task_dag", "principal_capacities", "department_expertise"],
+    "outputs": ["principal_assignments", "capacity_plan", "dependency_map"],
+    "tools_required": ["query_agent_status", "delegate_task", "broadcast_message"]
+  },
+  "system_monitoring": {
+    "name": "System Monitoring",
+    "description": "Track health, performance, and progress across all 16,111 agents",
+    "inputs": ["agent_statuses", "metrics", "alerts"],
+    "outputs": ["system_health_report", "bottlenecks", "capacity_alerts", "progress_summary"],
+    "tools_required": ["get_system_status", "query_agent_status"]
+  },
+  "decision_authority": {
+    "name": "Decision Authority",
+    "description": "Final arbiter on architectural decisions, conflicts, and priorities",
+    "inputs": ["conflict_details", "options", "impact_analysis"],
+    "outputs": ["decision", "rationale", "implementation_directive"],
+    "tools_required": ["override_decision", "broadcast_message", "delegate_task"]
+  },
+  "cross_department_coordination": {
+    "name": "Cross-Department Coordination",
+    "description": "Manage dependencies and integration points between departments",
+    "inputs": ["department_plans", "integration_points", "shared_resources"],
+    "outputs": ["coordination_plan", "integration_schedule", "shared_resource_allocation"],
+    "tools_required": ["broadcast_message", "delegate_task", "read_database", "write_database"]
+  },
+  "master_key_management": {
+    "name": "Master Key Management",
+    "description": "Full system control via master API key - database access, agent communication, override authority",
+    "inputs": ["action", "target", "authorization"],
+    "outputs": ["execution_result", "audit_log"],
+    "tools_required": ["read_database", "write_database", "invoke_agent", "override_decision"]
+  }
+}

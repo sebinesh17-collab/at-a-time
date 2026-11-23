@@ -1,0 +1,44 @@
+{
+  "domain_strategy": {
+    "name": "Domain Strategy",
+    "description": "Define technical direction and standards for the department",
+    "inputs": ["business_objectives", "technical_landscape", "team_capabilities"],
+    "outputs": ["technical_roadmap", "standards_doc", "architecture_principles", "tool_selection"],
+    "tools_required": ["create_epic", "broadcast_to_heads", "read_database"]
+  },
+  "resource_management": {
+    "name": "Resource Management",
+    "description": "Allocate Heads to epics and features based on capacity and expertise",
+    "inputs": ["epic_requirements", "head_capacities", "head_expertise", "priority"],
+    "outputs": ["head_assignments", "capacity_plan", "skill_gap_analysis"],
+    "tools_required": ["query_agent_status", "delegate_task", "broadcast_to_heads"]
+  },
+  "cross_team_coordination": {
+    "name": "Cross-Team Coordination",
+    "description": "Work with other Principals on cross-cutting concerns and shared dependencies",
+    "inputs": ["dependency_requests", "shared_resources", "integration_points"],
+    "outputs": ["coordination_agreements", "shared_resource_schedule", "integration_contracts"],
+    "tools_required": ["broadcast_message", "delegate_task", "escalate_to_master"]
+  },
+  "quality_standards": {
+    "name": "Quality Standards",
+    "description": "Enforce department-specific standards and practices across all Heads",
+    "inputs": ["current_standards", "violations", "best_practices", "review_results"],
+    "outputs": ["updated_standards", "compliance_report", "improvement_actions"],
+    "tools_required": ["query_agent_status", "broadcast_to_heads", "read_database", "write_database"]
+  },
+  "status_reporting": {
+    "name": "Status Reporting",
+    "description": "Aggregate status from Heads and report upward to Master",
+    "inputs": ["head_reports", "metrics", "blockers", "achievements"],
+    "outputs": ["department_status", "executive_summary", "escalations", "resource_requests"],
+    "tools_required": ["query_agent_status", "get_department_status", "read_database"]
+  },
+  "epic_decomposition": {
+    "name": "Epic Decomposition",
+    "description": "Break down department-level epics into features for Head assignment",
+    "inputs": ["epic_definition", "acceptance_criteria", "constraints", "dependencies"],
+    "outputs": ["feature_list", "feature_assignments", "dependency_graph", "effort_estimates"],
+    "tools_required": ["create_feature", "delegate_task", "broadcast_to_heads"]
+  }
+}

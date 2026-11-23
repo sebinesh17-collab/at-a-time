@@ -1,0 +1,56 @@
+name = "autonomousforge"
+main = "src/worker.ts"
+compatibility_date = "2024-11-22"
+compatibility_flags = ["nodejs_compat"]
+
+# Frontend - Cloudflare Pages
+[build]
+command = "echo 'Static site - no build needed'"
+destination = "apps/web"
+
+# Environment variables (set via Cloudflare dashboard)
+[vars]
+API_URL = "https://api.yourdomain.com"
+FRONTEND_URL = "https://autonomousforge.yourdomain.com"
+THEME_MODE = "purple"
+PRIMARY_COLOR = "#7c3aed"
+ACCENT_COLOR = "#a855f7"
+API_DOMAIN = "api.yourdomain.com"
+D1_DATABASE_ID = ""
+
+# KV Namespaces for caching/sessions
+[[kv_namespaces]]
+binding = "SESSION_KV"
+id = "your-kv-namespace-id"
+preview_id = "your-preview-kv-namespace-id"
+
+# D1 Database (if using Cloudflare D1 instead of PostgreSQL)
+# [[d1_databases]]
+# binding = "DB"
+# database_name = "autonomousforge"
+# database_id = "your-d1-database-id"
+
+# R2 Bucket for file storage
+[[r2_buckets]]
+binding = "FILE_STORAGE"
+bucket_name = "autonomousforge-files"
+preview_bucket_name = "autonomousforge-files-preview"
+
+# Hyperdrive for PostgreSQL connection pooling (optional)
+# [[hyperdrive]]
+# binding = "HYPERDRIVE"
+# id = "your-hyperdrive-id"
+
+# Workers AI (optional)
+# [[ai]]
+# binding = "AI"
+
+# Service bindings for microservices (if using Workers for each)
+# [[services]]
+# binding = "AUTH_SERVICE"
+# service = "autonomousforge-auth"
+
+# Durable Objects for WebSocket connections
+# [[durable_objects.bindings]]
+# name = "WEBSOCKET_HANDLER"
+# class_name = "WebSocketHandler"

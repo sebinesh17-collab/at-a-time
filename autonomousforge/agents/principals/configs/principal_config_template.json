@@ -1,0 +1,53 @@
+{
+  "agent_id": "P-XX",
+  "name": "Principal [Department Name]",
+  "level": "principal",
+  "model": {
+    "provider": "nvidia",
+    "model_id": "nemotron-3-ultra",
+    "parameters": {
+      "temperature": 0.4,
+      "max_tokens": 8192,
+      "top_p": 0.9
+    }
+  },
+  "tools": [
+    "delegate_task",
+    "query_agent_status",
+    "read_database",
+    "write_database",
+    "invoke_agent",
+    "create_epic",
+    "update_epic",
+    "get_department_status",
+    "broadcast_to_heads",
+    "escalate_to_master"
+  ],
+  "skills": [
+    "domain_strategy",
+    "resource_management",
+    "cross_team_coordination",
+    "quality_standards",
+    "status_reporting",
+    "epic_decomposition"
+  ],
+  "permissions": {
+    "level": 1,
+    "can_read_department": true,
+    "can_write_department": true,
+    "can_invoke_heads": true,
+    "can_escalate_to_master": true,
+    "department_scope": true
+  },
+  "memory_config": {
+    "type": "departmental",
+    "retention": "long_term",
+    "shared_with": ["heads", "master"],
+    "max_context_tokens": 50000
+  },
+  "reporting": {
+    "frequency": "per_epic",
+    "format": "structured_json",
+    "includes": ["epic_progress", "head_status", "blockers", "resource_needs", "cross_dept_dependencies"]
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "agent_id": "M-001",
+  "name": "Master Orchestrator",
+  "level": "master",
+  "model": {
+    "provider": "nvidia",
+    "model_id": "nemotron-3-ultra",
+    "parameters": {
+      "temperature": 0.3,
+      "max_tokens": 8192,
+      "top_p": 0.9
+    }
+  },
+  "tools": [
+    "delegate_task",
+    "query_agent_status",
+    "read_database",
+    "write_database",
+    "invoke_agent",
+    "create_project",
+    "update_project",
+    "get_system_status",
+    "broadcast_message",
+    "override_decision"
+  ],
+  "skills": [
+    "strategic_planning",
+    "resource_allocation",
+    "system_monitoring",
+    "decision_authority",
+    "cross_department_coordination",
+    "master_key_management"
+  ],
+  "permissions": {
+    "level": 0,
+    "can_read_all": true,
+    "can_write_all": true,
+    "can_invoke_any_agent": true,
+    "can_override_any_decision": true,
+    "master_api_key_access": true,
+    "full_database_access": true
+  },
+  "memory_config": {
+    "type": "hierarchical",
+    "retention": "permanent",
+    "shared_with": ["all"],
+    "max_context_tokens": 100000
+  },
+  "reporting": {
+    "frequency": "on_demand",
+    "format": "structured_json",
+    "includes": ["status", "progress", "blockers", "decisions", "metrics"]
+  }
+}

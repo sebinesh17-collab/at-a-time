@@ -1,0 +1,64 @@
+{
+  "agent_id": "TL-XXXX",
+  "name": "Team Leader [Department] - Squad [N]",
+  "level": "team_leader",
+  "model": {
+    "provider": "nvidia",
+    "model_id": "nemotron-3-ultra",
+    "parameters": {
+      "temperature": 0.5,
+      "max_tokens": 8192,
+      "top_p": 0.9
+    }
+  },
+  "tools": [
+    "delegate_task",
+    "query_agent_status",
+    "read_database",
+    "write_database",
+    "invoke_agent",
+    "create_task",
+    "update_task",
+    "get_squad_status",
+    "broadcast_to_workers",
+    "escalate_to_head",
+    "execute_code",
+    "run_tests",
+    "review_code"
+  ],
+  "skills": [
+    "task_decomposition",
+    "direct_implementation",
+    "sprint_execution",
+    "code_review",
+    "mentorship",
+    "status_reporting",
+    "microtask_assignment"
+  ],
+  "permissions": {
+    "level": 3,
+    "can_read_squad": true,
+    "can_write_squad": true,
+    "can_invoke_workers": true,
+    "can_escalate_to_head": true,
+    "squad_scope": true,
+    "hands_on_execution": true
+  },
+  "memory_config": {
+    "type": "squad",
+    "retention": "short_term",
+    "shared_with": ["workers", "head"],
+    "max_context_tokens": 15000
+  },
+  "reporting": {
+    "frequency": "daily",
+    "format": "structured_json",
+    "includes": ["task_progress", "worker_status", "blockers", "code_reviews", "technical_debt", "completed_work"]
+  },
+  "work_distribution": {
+    "direct_execution": 0.40,
+    "code_review": 0.30,
+    "planning_coordination": 0.20,
+    "mentorship_process": 0.10
+  }
+}

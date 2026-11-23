@@ -1,0 +1,369 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: autonomousforge-postgres
+    environment:
+      POSTGRES_DB: autonomousforge
+      POSTGRES_USER: forge
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-forge_secure_password}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./database/init:/docker-entrypoint-initdb.d
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U forge -d autonomousforge"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: autonomousforge-redis
+    command: redis-server --appendonly yes --maxmemory 256mb --maxmemory-policy allkeys-lru
+    volumes:
+      - redis_data:/data
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  auth-service:
+    build:
+      context: .
+      dockerfile: services/auth-service/Dockerfile
+    container_name: autonomousforge-auth
+    environment:
+      - DATABASE_URL=postgresql://forge:${POSTGRES_PASSWORD:-forge_secure_password}@postgres:5432/autonomousforge
+      - REDIS_URL=redis://redis:6379
+      - JWT_SECRET=${JWT_SECRET:-change_this_in_production}
+      - MASTER_API_KEY=${MASTER_API_KEY}
+    ports:
+      - "8001:8001"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    volumes:
+      - ./services:/app/services
+      - ./packages:/app/packages
+
+  master-orchestrator:
+    build:
+      context: .
+      dockerfile: services/master-orchestrator/Dockerfile
+    container_name: autonomousforge-orchestrator
+    environment:
+      - DATABASE_URL=postgresql://forge:${POSTGRES_PASSWORD:-forge_secure_password}@postgres:5432/autonomousforge
+      - REDIS_URL=redis://redis:6379
+      - NVIDIA_API_KEY=${NVIDIA_API_KEY}
+      - NVIDIA_BASE_URL=https://integrate.api.nvidia.com/v1
+    ports:
+      - "8002:8002"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    volumes:
+      - ./services:/app/services
+      - ./packages:/app/packages
+
+  agent-registry:
+    build:
+      context: .
+      dockerfile: services/agent-registry/Dockerfile
+    container_name: autonomousforge-agent-registry
+    environment:
+      - DATABASE_URL=postgresql://forge:${POSTGRES_PASSWORD:-forge_secure_password}@postgres:5432/autonomousforge
+      - REDIS_URL=redis://redis:6379
+    ports:
+      - "8003:8003"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    volumes:
+      - ./services:/app/services
+      - ./packages:/app/packages
+
+  task-scheduler:
+    build:
+      context: .
+      dockerfile: services/task-scheduler/Dockerfile
+    container_name: autonomousforge-task-scheduler
+    environment:
+      - DATABASE_URL=postgresql://forge:${POSTGRES_PASSWORD:-forge_secure_password}@postgres:5432/autonomousforge
+      - REDIS_URL=redis://redis:6379
+      - NVIDIA_API_KEY=${NVIDIA_API_KEY}
+      - NVIDIA_BASE_URL=https://integrate.api.nvidia.com/v1
+    ports:
+      - "8004:8004"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    volumes:
+      - ./services:/app/services
+      - ./packages:/app/packages
+
+  model-gateway:
+    build:
+      context: .
+      dockerfile: services/model-gateway/Dockerfile
+    container_name: autonomousforge-model-gateway
+    environment:
+      - DATABASE_URL=postgresql://forge:${POSTGRES_PASSWORD:-forge_secure_password}@postgres:5432/autonomousforge
+      - REDIS_URL=redis://redis:6379
+      - NVIDIA_API_KEY=${NVIDIA_API_KEY}
+      - NVIDIA_BASE_URL=https://integrate.api.nvidia.com/v1
+    ports:
+      - "8005:8005"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    volumes:
+      - ./services:/app/services
+      - ./packages:/app/packages
+
+  provider-service:
+    build:
+      context: .
+      dockerfile: services/provider-service/Dockerfile
+    container_name: autonomousforge-provider
+    environment:
+      - DATABASE_URL=postgresql://forge:${POSTGRES_PASSWORD:-forge_secure_password}@postgres:5432/autonomousforge
+      - REDIS_URL=redis://redis:6379
+      - MASTER_API_KEY=${MASTER_API_KEY}
+    ports:
+      - "8006:8006"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    volumes:
+      - ./services:/app/services
+      - ./packages:/app/packages
+
+  file-service:
+    build:
+      context: .
+      dockerfile: services/file-service/Dockerfile
+    container_name: autonomousforge-file
+    environment:
+      - DATABASE_URL=postgresql://forge:${POSTGRES_PASSWORD:-forge_secure_password}@postgres:5432/autonomousforge
+      - REDIS_URL=redis://redis:6379
+    ports:
+      - "8007:8007"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    volumes:
+      - ./services:/app/services
+      - ./packages:/app/packages
+      - file_data:/data/files
+
+  memory-service:
+    build:
+      context: .
+      dockerfile: services/memory-service/Dockerfile
+    container_name: autonomousforge-memory
+    environment:
+      - DATABASE_URL=postgresql://forge:${POSTGRES_PASSWORD:-forge_secure_password}@postgres:5432/autonomousforge
+      - REDIS_URL=redis://redis:6379
+      - NVIDIA_API_KEY=${NVIDIA_API_KEY}
+      - NVIDIA_BASE_URL=https://integrate.api.nvidia.com/v1
+    ports:
+      - "8008:8008"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    volumes:
+      - ./services:/app/services
+      - ./packages:/app/packages
+
+  knowledge-service:
+    build:
+      context: .
+      dockerfile: services/knowledge-service/Dockerfile
+    container_name: autonomousforge-knowledge
+    environment:
+      - DATABASE_URL=postgresql://forge:${POSTGRES_PASSWORD:-forge_secure_password}@postgres:5432/autonomousforge
+      - REDIS_URL=redis://redis:6379
+      - NVIDIA_API_KEY=${NVIDIA_API_KEY}
+      - NVIDIA_BASE_URL=https://integrate.api.nvidia.com/v1
+    ports:
+      - "8009:8009"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    volumes:
+      - ./services:/app/services
+      - ./packages:/app/packages
+      - knowledge_data:/data/knowledge
+
+  execution-service:
+    build:
+      context: .
+      dockerfile: services/execution-service/Dockerfile
+    container_name: autonomousforge-execution
+    environment:
+      - DATABASE_URL=postgresql://forge:${POSTGRES_PASSWORD:-forge_secure_password}@postgres:5432/autonomousforge
+      - REDIS_URL=redis://redis:6379
+    ports:
+      - "8010:8010"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    volumes:
+      - ./services:/app/services
+      - ./packages:/app/packages
+      - workspace_data:/workspace
+
+  build-service:
+    build:
+      context: .
+      dockerfile: services/build-service/Dockerfile
+    container_name: autonomousforge-build
+    environment:
+      - DATABASE_URL=postgresql://forge:${POSTGRES_PASSWORD:-forge_secure_password}@postgres:5432/autonomousforge
+      - REDIS_URL=redis://redis:6379
+    ports:
+      - "8011:8011"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    volumes:
+      - ./services:/app/services
+      - ./packages:/app/packages
+      - workspace_data:/workspace
+
+  testing-service:
+    build:
+      context: .
+      dockerfile: services/testing-service/Dockerfile
+    container_name: autonomousforge-testing
+    environment:
+      - DATABASE_URL=postgresql://forge:${POSTGRES_PASSWORD:-forge_secure_password}@postgres:5432/autonomousforge
+      - REDIS_URL=redis://redis:6379
+    ports:
+      - "8012:8012"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    volumes:
+      - ./services:/app/services
+      - ./packages:/app/packages
+      - workspace_data:/workspace
+
+  monitoring-service:
+    build:
+      context: .
+      dockerfile: services/monitoring-service/Dockerfile
+    container_name: autonomousforge-monitoring
+    environment:
+      - DATABASE_URL=postgresql://forge:${POSTGRES_PASSWORD:-forge_secure_password}@postgres:5432/autonomousforge
+      - REDIS_URL=redis://redis:6379
+    ports:
+      - "8013:8013"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    volumes:
+      - ./services:/app/services
+      - ./packages:/app/packages
+
+  api-gateway:
+    build:
+      context: .
+      dockerfile: services/api-gateway/Dockerfile
+    container_name: autonomousforge-api
+    environment:
+      - DATABASE_URL=postgresql://forge:${POSTGRES_PASSWORD:-forge_secure_password}@postgres:5432/autonomousforge
+      - REDIS_URL=redis://redis:6379
+      - JWT_SECRET=${JWT_SECRET:-change_this_in_production}
+      - NVIDIA_API_KEY=${NVIDIA_API_KEY}
+      - NVIDIA_BASE_URL=https://integrate.api.nvidia.com/v1
+      - MASTER_API_KEY=${MASTER_API_KEY}
+    ports:
+      - "8000:8000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      auth-service:
+        condition: service_started
+      master-orchestrator:
+        condition: service_started
+      agent-registry:
+        condition: service_started
+      task-scheduler:
+        condition: service_started
+      model-gateway:
+        condition: service_started
+      provider-service:
+        condition: service_started
+      file-service:
+        condition: service_started
+      memory-service:
+        condition: service_started
+      knowledge-service:
+        condition: service_started
+      execution-service:
+        condition: service_started
+      build-service:
+        condition: service_started
+      testing-service:
+        condition: service_started
+      monitoring-service:
+        condition: service_started
+    volumes:
+      - ./services:/app/services
+      - ./packages:/app/packages
+
+  frontend:
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
+    container_name: autonomousforge-frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - api-gateway
+
+volumes:
+  postgres_data:
+  redis_data:
+  file_data:
+  knowledge_data:
+  workspace_data:
+
+networks:
+  default:
+    name: autonomousforge-network

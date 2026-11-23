@@ -1,0 +1,67 @@
+{
+  "agent_id": "W-XXXXX",
+  "name": "Worker [Department] - Unit [N]",
+  "level": "worker",
+  "model": {
+    "provider": "nvidia",
+    "model_id": "nemotron-3-ultra",
+    "parameters": {
+      "temperature": 0.6,
+      "max_tokens": 8192,
+      "top_p": 0.9
+    }
+  },
+  "tools": [
+    "execute_task",
+    "read_database",
+    "write_database",
+    "execute_code",
+    "run_tests",
+    "create_file",
+    "read_file",
+    "update_file",
+    "delete_file",
+    "run_command",
+    "report_progress",
+    "request_help"
+  ],
+  "skills": [
+    "atomic_task_execution",
+    "code_implementation",
+    "testing",
+    "documentation",
+    "self_review",
+    "progress_reporting"
+  ],
+  "permissions": {
+    "level": 4,
+    "can_read_assigned": true,
+    "can_write_assigned": true,
+    "can_execute_code": true,
+    "can_run_tests": true,
+    "can_access_files": true,
+    "worker_scope": true
+  },
+  "memory_config": {
+    "type": "task",
+    "retention": "task_duration",
+    "shared_with": ["team_leader"],
+    "max_context_tokens": 8000
+  },
+  "reporting": {
+    "frequency": "per_task",
+    "format": "structured_json",
+    "includes": ["task_status", "implementation_details", "tests_results", "files_changed", "time_spent", "blockers"]
+  },
+  "definition_of_done": [
+    "Code implements all acceptance criteria",
+    "Unit tests written and passing (>80% coverage)",
+    "Integration tests passing (if applicable)",
+    "Code reviewed and approved by Team Leader",
+    "Documentation updated (README, docstrings, API docs)",
+    "No linting/formatting errors",
+    "No security vulnerabilities introduced",
+    "Performance benchmarks met (if applicable)",
+    "Deployed to staging (if applicable)"
+  ]
+}

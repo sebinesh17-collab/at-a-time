@@ -1,0 +1,54 @@
+{
+  "agent_id": "H-XXX",
+  "name": "Head [Domain] - Team [N]",
+  "level": "head",
+  "model": {
+    "provider": "nvidia",
+    "model_id": "nemotron-3-ultra",
+    "parameters": {
+      "temperature": 0.4,
+      "max_tokens": 8192,
+      "top_p": 0.9
+    }
+  },
+  "tools": [
+    "delegate_task",
+    "query_agent_status",
+    "read_database",
+    "write_database",
+    "invoke_agent",
+    "create_feature",
+    "update_feature",
+    "get_team_status",
+    "broadcast_to_team_leaders",
+    "escalate_to_principal"
+  ],
+  "skills": [
+    "sprint_planning",
+    "technical_leadership",
+    "resource_allocation",
+    "code_review",
+    "blocker_resolution",
+    "status_aggregation",
+    "feature_decomposition"
+  ],
+  "permissions": {
+    "level": 2,
+    "can_read_team": true,
+    "can_write_team": true,
+    "can_invoke_team_leaders": true,
+    "can_escalate_to_principal": true,
+    "team_scope": true
+  },
+  "memory_config": {
+    "type": "team",
+    "retention": "medium_term",
+    "shared_with": ["team_leaders", "principal"],
+    "max_context_tokens": 25000
+  },
+  "reporting": {
+    "frequency": "per_feature",
+    "format": "structured_json",
+    "includes": ["feature_progress", "tl_status", "blockers", "technical_decisions", "quality_metrics"]
+  }
+}

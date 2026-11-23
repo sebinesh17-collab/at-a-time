@@ -1,0 +1,51 @@
+{
+  "sprint_planning": {
+    "name": "Sprint Planning",
+    "description": "Break features into tasks for Team Leaders and plan sprint capacity",
+    "inputs": ["feature_list", "tl_capacities", "tl_expertise", "sprint_goals"],
+    "outputs": ["task_assignments", "sprint_plan", "capacity_allocation", "risk_mitigation"],
+    "tools_required": ["create_task", "delegate_task", "broadcast_to_team_leaders", "query_agent_status"]
+  },
+  "technical_leadership": {
+    "name": "Technical Leadership",
+    "description": "Guide implementation approach and make technical decisions for the team",
+    "inputs": ["technical_challenges", "options", "constraints", "best_practices"],
+    "outputs": ["technical_decisions", "architecture_guidance", "code_standards", "patterns"],
+    "tools_required": ["read_database", "write_database", "broadcast_to_team_leaders", "invoke_agent"]
+  },
+  "resource_allocation": {
+    "name": "Resource Allocation",
+    "description": "Assign Team Leaders to tasks based on capacity, skills, and priority",
+    "inputs": ["task_requirements", "tl_availability", "tl_skills", "dependencies"],
+    "outputs": ["tl_assignments", "workload_balance", "skill_coverage", "contingency_plan"],
+    "tools_required": ["query_agent_status", "delegate_task", "get_team_status"]
+  },
+  "code_review": {
+    "name": "Code Review",
+    "description": "Review Team Leader outputs before Principal submission",
+    "inputs": ["code_changes", "requirements", "standards", "test_results"],
+    "outputs": ["review_feedback", "approval_status", "required_changes", "quality_score"],
+    "tools_required": ["read_database", "invoke_agent", "broadcast_to_team_leaders"]
+  },
+  "blocker_resolution": {
+    "name": "Blocker Resolution",
+    "description": "Clear impediments for Team Leaders - technical, resource, or dependency",
+    "inputs": ["blocker_details", "impact", "urgency", "available_resources"],
+    "outputs": ["resolution_plan", "resource_reallocation", "escalation_if_needed", "timeline_impact"],
+    "tools_required": ["query_agent_status", "delegate_task", "escalate_to_principal", "broadcast_to_team_leaders"]
+  },
+  "status_aggregation": {
+    "name": "Status Aggregation",
+    "description": "Aggregate Team Leader progress and report to Principal",
+    "inputs": ["tl_reports", "metrics", "blockers", "completed_work"],
+    "outputs": ["team_status", "progress_summary", "escalations", "velocity_metrics"],
+    "tools_required": ["query_agent_status", "get_team_status", "read_database"]
+  },
+  "feature_decomposition": {
+    "name": "Feature Decomposition",
+    "description": "Break features into tasks and subtasks for Team Leader assignment",
+    "inputs": ["feature_definition", "acceptance_criteria", "technical_constraints"],
+    "outputs": ["task_breakdown", "subtask_list", "dependency_graph", "effort_estimates", "skill_requirements"],
+    "tools_required": ["create_task", "create_subtask", "delegate_task", "broadcast_to_team_leaders"]
+  }
+}

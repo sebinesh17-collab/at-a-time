@@ -1,0 +1,44 @@
+{
+  "atomic_task_execution": {
+    "name": "Atomic Task Execution",
+    "description": "Complete assigned microtasks and atomic tasks independently with high quality",
+    "inputs": ["task_specification", "acceptance_criteria", "technical_constraints", "existing_code"],
+    "outputs": ["implementation", "unit_tests", "documentation", "deployment_ready_code"],
+    "tools_required": ["execute_code", "create_file", "read_file", "update_file", "run_tests", "run_command"]
+  },
+  "code_implementation": {
+    "name": "Code Implementation",
+    "description": "Write production-quality code following standards and best practices",
+    "inputs": ["requirements", "design_spec", "coding_standards", "patterns", "libraries"],
+    "outputs": ["source_code", "configuration", "migrations", "scripts"],
+    "tools_required": ["execute_code", "create_file", "update_file", "run_tests", "run_command"]
+  },
+  "testing": {
+    "name": "Testing",
+    "description": "Write and run tests - unit, integration, and validation",
+    "inputs": ["code_to_test", "requirements", "test_strategy", "test_data"],
+    "outputs": ["test_files", "test_results", "coverage_report", "bug_reports"],
+    "tools_required": ["execute_code", "create_file", "run_tests", "run_command"]
+  },
+  "documentation": {
+    "name": "Documentation",
+    "description": "Document implementation - code comments, API docs, README updates",
+    "inputs": ["implementation", "api_changes", "architecture_decisions", "usage_examples"],
+    "outputs": ["docstrings", "api_documentation", "readme_updates", "adr_entries"],
+    "tools_required": ["create_file", "read_file", "update_file"]
+  },
+  "self_review": {
+    "name": "Self Review",
+    "description": "Validate own work against definition of done before submission",
+    "inputs": ["implementation", "tests", "documentation", "standards", "acceptance_criteria"],
+    "outputs": ["review_checklist", "issues_found", "fixes_applied", "readiness_confirmation"],
+    "tools_required": ["execute_code", "run_tests", "run_command", "read_file"]
+  },
+  "progress_reporting": {
+    "name": "Progress Reporting",
+    "description": "Report status, blockers, and completion to Team Leader",
+    "inputs": ["task_progress", "blockers", "time_spent", "estimated_remaining", "issues"],
+    "outputs": ["status_update", "blocker_report", "completion_report", "metrics"],
+    "tools_required": ["report_progress", "request_help", "read_database", "write_database"]
+  }
+}
